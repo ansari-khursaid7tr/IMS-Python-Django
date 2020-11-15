@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+{% block body %}
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+<!-- Custom styles for this template -->
+
+
+
+<div class="container-fluid">
+<div class="row">
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  <div class="sidebar-sticky pt-3">
+    <ul class="nav flex-column">
+      <div class="div mt-2">
+        {% for company in companys %}
+        <h6 align="center"> {{company.name}}</h6>
+        {% endfor %}
+        <hr>
+      </div>
+      <li class="nav-item">
+        <a class="nav-link active" href="/dashboard">
+          <span data-feather="home"></span>
+          <i class="fa fa-tachometer fa-fw" aria-hidden="true"></i>  Dashboard <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/sales">
+          <i class="fa fa-sellsy fa-fw" aria-hidden="true"></i>
+          Sell
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/buy">
+          <i class="fa fa-money fa-fw" aria-hidden="true"></i>
+          Buy
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
+          <i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i>  Products
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="/addunit"><i class="fa fa-plus fa-fw" aria-hidden="true"></i>  Add Products</a>
+          <a class="dropdown-item" href="/products"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>  Display Products</a>
+        </div> 
+      </li>
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-server fa-fw" aria-hidden="true"></i>  Dealers</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/adddealer"><i class="fa fa-plus fa-fw" aria-hidden="true"></i>  Add Dealer</a>
+            <a class="dropdown-item" href="/dealers"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>  Display Dealers</a>
+          </div> 
+      </li>
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-users fa-fw" aria-hidden="true"></i>  Vendors</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/addvendor"><i class="fa fa-plus fa-fw" aria-hidden="true"></i>  Add Vendor</a>
+            <a class="dropdown-item" href="/vendors"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>  Display Vendors</a>
+          </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/warehouse">
+          <i class="fa fa-archive fa-fw" aria-hidden="true"></i>
+          Warehouse
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-flag fa-fw" aria-hidden="true"></i>
+          Reports
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/bank">
+          <i class="fa fa-university fa-fw" aria-hidden="true"></i>
+          Bank
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+          Settings
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'changepassword' %}"><i class="fa fa-unlock-alt fa-fw" aria-hidden="true"></i>  Change Password</a>
+          {% if request.user.is_superuser %}
+          <a class="dropdown-item" href="/register"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>  Add Users</a>
+          <a class="dropdown-item" href="/company"><i class="fa fa-building fa-fw" aria-hidden="true"></i>  Change Company Info</a>
+          {% endif %}
+        </div>     
+      </li>
+      
+    </ul>
+    <hr>
+
+    
+  </div>
+</nav>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h5 class="h2">Dashboard</h5>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+        <span data-feather="calendar"></span>
+        This week
+      </button>
+    </div>
+  </div>
+  <canvas class="my-4 w-100" id="pie-chart" width="900" height="380"></canvas>    
+</main>
+</div>
+</div>
+
+
+<style>
+  @media screen and (max-height: 450px) {
+    #sidebarMenu {padding-top: 15px;}
+    #sidebarMenu a {font-size: 18px;}
+  }
+ 
+
+</style>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+      /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+      var dropdown = document.getElementsByClassName("dropdown-item");
+      var i;
+      
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+        } else {
+        dropdownContent.style.display = "block";
+        }
+        });
+      }
+      </script>
+      
+
+{% endblock body %}

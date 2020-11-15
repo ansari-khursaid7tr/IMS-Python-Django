@@ -1,0 +1,71 @@
+{% extends 'dashboard.html' %}
+
+{% block title %} Dealers | {% endblock title %}
+
+{% block body %}
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+  
+      <div class="col-xl-10 col-lg-12 col-md-9">
+  
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-5">
+            <form class="container p-0">
+            <div class="text-center mt-2 mb-2">
+                <h1 class="h4 text-gray-900 mb-2 mt-0 ml-1">Dealers</h1>
+                <hr>
+              </div>
+              <div class="form-row">
+               
+                    <div class="form-group">
+                      <form method="GET">
+                          {{myfilter.form}}
+                      </form>
+                    </div>
+                <div class="form-group col">
+                    <button type="submit" value="Search" class="btn btn-outline-primary"><i class="fa fa-filter fa-fw" aria-hidden="true"></i></button>
+                </div>
+                <div class="form-group col-md-3">
+                    <a href='/adddealer' class="btn btn-outline-success "><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Add New Dealer</a>
+                </div>
+                </div>
+            <table class="table table-striped table-borderless table-sm">
+                <thead class="thead-dark border-bottom font-weight-bold">
+                <tr align="center">
+                    <th>Dealer Name</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Contact</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                {% for content in contents %}
+                <tr align="center">
+                    <td>{{ content.name }}</td>
+                    <td>{{ content.email }}</td>
+                    <td>{{content.city}}</td>
+                    <td>{{ content.contact }}</td>
+                    
+                    <td>
+                        <a href="{% url 'editdealer' content.id %}"><span class=""><i class="fa fa-pencil-square-o fa-fw text-success" aria-hidden="true"></i></span></a>
+                        <a href="{% url 'deletedealer' content.id %}"><span class=""><i class="fa fa-trash-o fa-fw text-danger" aria-hidden="true"></i></span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+        
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+
+
+{% endblock body %}

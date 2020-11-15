@@ -1,0 +1,69 @@
+{% extends 'dashboard.html' %}
+
+{% block title %} Company Info | {% endblock title %} 
+
+{% block body %}
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+  
+      <div class="col-xl-10 col-lg-12 col-md-9">
+  
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+        <form class="container p-5">
+            {% csrf_token %}
+            <div class="container mb-3">
+                <h3 align="center"> Company Information </h3>
+                <hr>
+            </div>
+            <table class="table table-borderless table-sm">
+                
+            {% for company in companys %}
+            <div class="form-row ml-5">
+            <div class="form-group col-md-6">
+                <label><h6>Company Name : </h6> </label> <b>{{company.name}}</b> 
+            </div>
+            </div>
+            
+            
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>Address : </h6></label> <b> {{company.address}}</b>
+                </div>
+               
+                
+            </div>
+            
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>City :</h6> </label> <b> {{company.city}}</b>
+               
+               </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>Contact :</h6> </label> <b> {{company.contact}}</b>
+                </div>
+            </div>
+            
+            <hr>
+            <div class="form-row mt-3">
+            <div class="form-group col-md-3">
+                <a href="{% url 'editcompany' company.id %}"><span class="btn btn-outline-danger btn-block"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i>  Change Info</span></a>
+            </div>
+            </div>
+            
+            </table>
+            {% endfor %}
+            
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+{% endblock body %}

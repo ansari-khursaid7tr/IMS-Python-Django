@@ -1,0 +1,73 @@
+{% extends 'dashboard.html' %}
+
+{% block title %} Warehouse | {% endblock title %}
+
+{% block body %}
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+  
+      <div class="col-xl-10 col-lg-12 col-md-9">
+  
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <form class="container p-5">
+            <div class="text-center mt-2 mb-2"> 
+                <h1 class="h4 text-gray-900 mb-2 mt-0 ml-1">Warehouse Details</h1>
+                <hr>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                    <!-- <select id="inputState" class="form-control" name="filter">
+                        <option selected>Add Filter</option>
+                        <option>Budget</option>
+                        <option>Mid-range</option>
+                        <option>Flagship</option>
+                      </select> -->
+                </div>
+                <div class="form-group col">
+                    <!-- <a href='#' class="btn btn-outline-primary"><i class="fa fa-filter fa-fw" aria-hidden="true"></i> Filter</a> -->
+                </div>
+                <div class="form-group col">
+                    <a href='/addwarehouse' class="btn btn-outline-success "><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Add New Warehouse</a>
+                </div>
+                </div>
+            <table class="table table-striped table-borderless table-sm">
+                <thead class="thead-dark border-bottom">
+                <tr align="center">
+                    <th>Warehouse Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                {% for content in contents %}
+                <tr align="center">
+                    <td>{{ content.name }}</td>
+                    <td>{{ content.address }}</td>
+                    <td>{{ content.city }}</td>
+                    <td>{{ content.contact }}</td>
+                    <td>{{ content.status }}</td>
+                    <td>
+                        <a href="{% url 'editwarehouse' content.id %}"><span class="btn text-success px-0"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></span></a>
+                        <a href="{% url 'deletewarehouse' content.id %}"><span class="btn text-danger px-0"><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i></span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+        
+        
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>       
+
+
+{% endblock body %}

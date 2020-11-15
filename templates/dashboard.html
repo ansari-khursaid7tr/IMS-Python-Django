@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    <title>{% block title %}{% endblock title %} Dashboard</title>
+</head>
+<body>
+    <input type="checkbox" id="menu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        {% for company in companys %}
+        <a class="navbar-brand ml-5" href="/">{{company.name}}</a>
+        {% endfor %}
+        <label for="menu" class="menu-bar">
+            <i class="fa fa-bars fa-fw"></i>
+        </label>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto ml-5 p-1">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contact">Contact</a>
+            </li>
+    
+           
+            
+          </ul>
+    
+          <ul class="navbar-nav mr-5 ml-0 p-1">
+            {% if user.is_authenticated %}
+            <li class="nav-item active mr-2">
+              <a class ="btn btn-success" href="/dashboarddata"><i class="fa fa-user-circle fa-fw" aria-hidden="true"></i>  Welcome, {{user.username}}</a>
+            </li>
+            <li class="nav-item Logout">
+              <a class="btn btn-warning Logout" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>  Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="btn btn-primary" href="/login"><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>  Login</a>
+            </li>
+            {% endif %}
+          </ul>
+         </div>
+      </nav>
+    <!--
+    <nav>
+        <label href="/">Inventory Management System</label>
+        <ul>
+            <li><a class ="btn btn-success" href="/dashboard"><i class="fa fa-user-circle fa-fw" aria-hidden="true"></i>  Welcome, {{user.username}}</a></li>
+            <li><a href="/logout" class="btn btn-warning"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout</a></li>
+        </ul>
+        <label for="menu" class="menu-bar">
+            <i class="fa fa-bars fa-fw"></i>
+        </label>
+    </nav> -->
+
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>{% endfor %}
+      {% endif %}
+    <div class="side-menu">
+        <center>
+            <img src="/static/1.png"><br>
+            <hr>
+        </center>
+    
+        <a href="/dashboarddata" ><i class="fa fa-tachometer fa-fw" aria-hidden="true"></i>  <span>Dashboard</span></a>
+        <a href="/sales" > <i class="fa fa-sellsy fa-fw" aria-hidden="true"></i>  <span>Sell</span></a>
+        <a href="/buy" ><i class="fa fa-money fa-fw" aria-hidden="true"></i>  <span>Buy</span></a>
+        <a href="/products" ><i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i>  <span>Products</span></a>
+        <a href="/dealers" ><i class="fa fa-server fa-fw" aria-hidden="true"></i>  <span>Dealers</span></a>
+        <a href="/vendors" ><i class="fa fa-users fa-fw" aria-hidden="true"></i> <span>Vendors</span></a>
+        <a href="/warehouse" ><i class="fa fa-archive fa-fw" aria-hidden="true"></i>  <span>Warehouse</span></a>
+        <!-- <a href="reports" ><i class="fa fa-flag fa-fw" aria-hidden="true"></i>  <span>Reports</span></a> -->
+        <a href="/bank" ><i class="fa fa-university fa-fw" aria-hidden="true"></i>  <span>Bank</span></a>
+        <!-- <a href="/settings" ><i class="fa fa-cog" aria-hidden="true"></i>  <span>Settings</span></a> -->
+        <li class="dropright">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cog" aria-hidden="true"></i>
+              <span>Settings</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>  <span>Logout</span></a>
+                <a class="dropdown-item" href="{% url 'changepassword' %}"><i class="fa fa-unlock-alt fa-fw" aria-hidden="true"></i>  Change Password</a>
+                {% if request.user.is_superuser %}
+                <a class="dropdown-item" href="/register"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>  Add Users</a>
+                <a class="dropdown-item" href="/company"><i class="fa fa-building fa-fw" aria-hidden="true"></i>  Change Company Info</a>
+                {% endif %}
+            </div>     
+          </li>
+        <hr>
+    </div>
+    <div class="data">
+            {% block body %}
+
+            {% endblock body %}
+    </div>
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .data{
+            height: auto;
+            margin-left: 250px;
+            background-size: cover;
+        }
+    
+        nav{
+            background: #343c47;
+            line-height: 20px;
+            position: absolute;
+            width: 100%;
+        }
+
+        nav ul{
+            float: right;
+            margin-top: 5px;
+            margin-right: 20px;
+        }
+
+        nav ul li{
+            line-height: 20px;
+            margin: 0 5px;
+            display: inline;
+        }
+
+        .btn{
+            border-radius: 50px;
+        }
+
+        .side-menu{
+            position: absolute;
+            background: lightgray;
+            width: 250px;
+            left: 100;
+            height: absolute;
+            margin-top: 0px;
+
+        }
+
+        .side-menu center img{
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            margin-top: 30px;
+            border: 3px solid white;
+        }
+
+        .side-menu a{
+            display: block;
+            line-height: 50px;
+            transition: 0.5s;
+        }
+
+        .side-menu a:hover{
+            background: #11937C;
+            color: white;
+            padding-left: 20px;
+            text-decoration: none;
+        }
+
+        .side-menu a:active{
+            background: #11937C;
+            color: white;
+            padding-left: 20px;
+            text-decoration: none;
+        }
+
+        .side-menu i{
+            font-size: 20px;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        nav .menu-bar{
+            display: none;
+        }
+
+        #menu{
+            display: none;
+        }
+
+        .side-menu .Logout{
+            display: none;
+        }
+    
+        @media(max-width: 850px){
+            .side-menu a span{
+                display: none;
+                
+            }
+
+            .side-menu center{
+                display: none;
+            }
+
+            .side-menu{
+                width: 100px;
+            }
+
+            .side-menu a li{
+                display: block;
+                line-height: 50px;
+                text-align: center;
+                margin-left: 5;
+                font-size: 25px;
+            }
+
+            .data{
+                margin-left: 100px;
+            }
+        }
+
+        @media(max-width: 650px){
+            .data{
+                display: none;
+            }
+
+            nav ul{
+                display: none;
+            }
+
+            .side-menu{
+                text-align: center;
+                width: 100%;
+                transition: all 0.5s;
+            }
+
+            .side-menu a i{
+                display: none;
+
+            }
+
+            .side-menu a span{
+                display: block;
+            }
+
+            nav .menu-bar{
+                display: block;
+            }
+        }
+
+        #menu:checked ~ .side-menu{
+            left: 0;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+      <!--  label{
+            line-height: 20px;
+            font-size: 30px;
+            color: #11937C;
+            font-weight: 200;
+            margin-top: 5px;
+            margin-left: 50px;
+            cursor:pointer;
+        } -->
+
+</body>
+</html>>

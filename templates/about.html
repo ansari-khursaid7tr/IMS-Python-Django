@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} About {% endblock title %} 
+
+{% block body %}
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+  
+      <div class="col-xl-10 col-lg-12 col-md-9">
+  
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+        <form class="container p-5">
+            {% csrf_token %}
+            <div class="container mb-3">
+                <h3 align="center"> About Us</h3>
+                <hr>
+            </div>
+           <div class="form-row">
+               <div class="form-group ml-5 mr-5">
+                    <p align="justify"> Hello, we <b><i>(KPK Softwares)</i></b> have designed this Inventory Management System for the fulfillment of practicable knowledge to
+                        be built. And also to get the knowledge and idea to generate different designs in HTML and CSS. </p>
+                        <br>
+                        <p align="justify">We built this web application using Django Web Framework which is enhanced by Python programming language. We used
+                            HTML, CSS and JavaScript for designing and we also took reference to the BootStrap functionalities in order.
+                        </p>
+                        <br>
+
+                        <h4 align="right"><i>KPK Softwares Pvt. Ltd.</i></h4>
+               </div>
+           </div>
+            
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+{% endblock body %}

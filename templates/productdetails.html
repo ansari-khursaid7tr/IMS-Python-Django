@@ -1,0 +1,88 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block title %} Product Info | {% endblock title %}
+
+{% block body %}
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+  
+      <div class="col-xl-10 col-lg-12 col-md-9">
+  
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+        <form class="container p-5">
+            {% csrf_token %}
+            {% for content in contents %}
+            <div class="container mb-3">
+                <h3 align="center"> {{content.name}} Details </h3>
+                <hr>
+            </div>
+            <table class="table table-borderless table-sm">
+                
+            <div class="form-row ml-5">
+            <div class="form-group col-md-6">
+                <label><h6>Company Name : </h6> </label> <b>{{content.name}}</b> 
+            </div>
+            <div class="form-group col-md-6">
+                <label><h6></h6> </label> {{content.photo}}
+            </div>
+            </div>
+            
+            
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>Manufacturer : </h6></label> <b> {{content.manufac}}</b>
+                </div>
+               
+                
+            </div>
+            
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>Price Range :</h6> </label> <b> {{content.range}}</b>
+               
+               </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>RAM :</h6> </label> <b> {{content.ram}}</b>
+                </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>Price :</h6> </label> <b> {{content.price}}</b>
+                </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>Available Quantity :</h6> </label> <b> {{content.quantity}}</b>
+                </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="form-group col-md-6">
+                    <label><h6>Specifications :</h6> </label> <b> {{content.desc}}</b>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+            <div class="form-row mt-3">
+            <div class="form-group col-md-3">
+                <a href='/products' class="btn btn-outline-secondary btn-block"><i class="fa fa-arrow-left fa-fw" aria-hidden="true"></i> Back</a>
+            </div>
+            </div>
+            
+            </table>
+            
+            
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+{% endblock body %}
