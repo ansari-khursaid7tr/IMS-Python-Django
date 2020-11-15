@@ -1,5 +1,5 @@
 # IMS-Python-Django
-Inventory Management System in Python Django based Web Application
+Inventory Management System in Python Django based Web Application with the help of BootStrap for designing.
 
 Some of the necessary installations to be made in Project
 
